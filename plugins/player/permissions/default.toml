@@ -1,0 +1,15 @@
+[default]
+description = "Allows the webview to drive the native video player"
+permissions = [
+  "allow-get-state",
+  "allow-pick-videos",
+  "allow-play",
+  "allow-next",
+  "allow-pause",
+  "allow-resume",
+  "allow-stop",
+  "allow-remove",
+  "allow-set-options",
+  "allow-register-listener",
+  "allow-remove-listener",
+]

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!-- Merged by the Tauri CLI into the generated iOS Info.plist. -->
+<plist version="1.0">
+<dict>
+	<!-- No status bar at launch; at runtime the player plugin hides it via the view controller. -->
+	<key>UIStatusBarHidden</key>
+	<true/>
+	<!-- Expose the app's Documents folder in Files ("On My iPad > Backstage") and Finder,
+	     so large videos can be copied in over USB and played without bookmarks. -->
+	<key>UIFileSharingEnabled</key>
+	<true/>
+	<key>LSSupportsOpeningDocumentsInPlace</key>
+	<true/>
+	<key>UISupportedInterfaceOrientations~ipad</key>
+	<array>
+		<string>UIInterfaceOrientationPortrait</string>
+		<string>UIInterfaceOrientationPortraitUpsideDown</string>
+		<string>UIInterfaceOrientationLandscapeLeft</string>
+		<string>UIInterfaceOrientationLandscapeRight</string>
+	</array>
+</dict>
+</plist>

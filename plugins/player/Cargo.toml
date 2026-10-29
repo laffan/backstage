@@ -1,0 +1,15 @@
+[package]
+name = "tauri-plugin-player"
+version = "0.1.0"
+description = "Native AVPlayer video layer for Backstage"
+edition = "2024"
+rust-version = "1.90"
+publish = false
+links = "tauri-plugin-player"
+
+[dependencies]
+tauri = { version = "2.12.5" }
+serde = { version = "1.0", features = ["derive"] }
+
+[build-dependencies]
+tauri-plugin = { version = "2.7.2", features = ["build"] }

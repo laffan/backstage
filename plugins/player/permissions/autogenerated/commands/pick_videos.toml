@@ -1,0 +1,13 @@
+# Automatically generated - DO NOT EDIT!
+
+"$schema" = "../../schemas/schema.json"
+
+[[permission]]
+identifier = "allow-pick-videos"
+description = "Enables the pick_videos command without any pre-configured scope."
+commands.allow = ["pick_videos"]
+
+[[permission]]
+identifier = "deny-pick-videos"
+description = "Denies the pick_videos command without any pre-configured scope."
+commands.deny = ["pick_videos"]

@@ -1,0 +1,26 @@
+[package]
+name = "backstage"
+version = "0.1.0"
+description = "A video desktop for iPad"
+authors = ["laffan"]
+edition = "2024"
+
+[lib]
+# The `_lib` suffix keeps the lib name distinct from the bin name
+# (https://github.com/rust-lang/cargo/issues/8519).
+name = "backstage_lib"
+crate-type = ["staticlib", "cdylib", "rlib"]
+
+[build-dependencies]
+tauri-build = { version = "2", features = [] }
+
+[dependencies]
+tauri = { version = "2", features = [] }
+tauri-plugin-player = { path = "../plugins/player" }
+
+[profile.release]
+codegen-units = 1
+lto = true
+opt-level = 3
+panic = "abort"
+strip = true
