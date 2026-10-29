@@ -68,7 +68,7 @@ npm run ios:build
 
 ### How the overlays are hidden
 
-At runtime the plugin sets `prefersStatusBarHidden`, `prefersHomeIndicatorAutoHidden` and `preferredScreenEdgesDeferringSystemGestures` on Tauri's root view controller. With deferred edges, the first swipe from an edge only reveals the grabber; a second swipe performs the system action. In a resizable Stage Manager window, iPadOS controls the window chrome itself.
+While the menu is hidden, the plugin sets `prefersStatusBarHidden`, `prefersHomeIndicatorAutoHidden` and `preferredScreenEdgesDeferringSystemGestures` on Tauri's root view controller. Opening the menu turns all three off again (`set_system_overlays`), so the status bar is back and the window can be dragged. With deferred edges, the first swipe from an edge only reveals the grabber; a second swipe performs the system action. In a resizable Stage Manager window, iPadOS controls the window chrome itself.
 
 ### Adding shaders later
 

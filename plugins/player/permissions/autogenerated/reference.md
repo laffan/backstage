@@ -13,6 +13,7 @@ Allows the webview to drive the native video player
 - `allow-stop`
 - `allow-remove`
 - `allow-set-options`
+- `allow-set-system-overlays`
 - `allow-register-listener`
 - `allow-remove-listener`
 
@@ -281,6 +282,32 @@ Enables the set_options command without any pre-configured scope.
 <td>
 
 Denies the set_options command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+`player:allow-set-system-overlays`
+
+</td>
+<td>
+
+Enables the set_system_overlays command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+`player:deny-set-system-overlays`
+
+</td>
+<td>
+
+Denies the set_system_overlays command without any pre-configured scope.
 
 </td>
 </tr>

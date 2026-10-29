@@ -84,14 +84,22 @@ function update(next: PlayerState) {
   else scheduleHide();
 }
 
+// The system status bar follows the panel: visible with the menu (so the
+// window can be dragged in Stage Manager), hidden while just playing.
+function setPanelVisible(visible: boolean) {
+  if (panel.hidden === !visible) return;
+  panel.hidden = !visible;
+  void player.setSystemOverlays(!visible).catch(() => {});
+}
+
 function show() {
-  panel.hidden = false;
+  setPanelVisible(true);
   scheduleHide();
 }
 
 function hide() {
   if (!state.currentId || state.error) return;
-  panel.hidden = true;
+  setPanelVisible(false);
   clearTimeout(hideTimer);
 }
 

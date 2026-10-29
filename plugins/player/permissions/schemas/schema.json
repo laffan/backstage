@@ -415,6 +415,18 @@
           "markdownDescription": "Denies the set_options command without any pre-configured scope."
         },
         {
+          "description": "Enables the set_system_overlays command without any pre-configured scope.",
+          "type": "string",
+          "const": "allow-set-system-overlays",
+          "markdownDescription": "Enables the set_system_overlays command without any pre-configured scope."
+        },
+        {
+          "description": "Denies the set_system_overlays command without any pre-configured scope.",
+          "type": "string",
+          "const": "deny-set-system-overlays",
+          "markdownDescription": "Denies the set_system_overlays command without any pre-configured scope."
+        },
+        {
           "description": "Enables the stop command without any pre-configured scope.",
           "type": "string",
           "const": "allow-stop",
@@ -427,10 +439,10 @@
           "markdownDescription": "Denies the stop command without any pre-configured scope."
         },
         {
-          "description": "Allows the webview to drive the native video player\n#### This default permission set includes:\n\n- `allow-get-state`\n- `allow-pick-videos`\n- `allow-play`\n- `allow-next`\n- `allow-pause`\n- `allow-resume`\n- `allow-stop`\n- `allow-remove`\n- `allow-set-options`\n- `allow-register-listener`\n- `allow-remove-listener`",
+          "description": "Allows the webview to drive the native video player\n#### This default permission set includes:\n\n- `allow-get-state`\n- `allow-pick-videos`\n- `allow-play`\n- `allow-next`\n- `allow-pause`\n- `allow-resume`\n- `allow-stop`\n- `allow-remove`\n- `allow-set-options`\n- `allow-set-system-overlays`\n- `allow-register-listener`\n- `allow-remove-listener`",
           "type": "string",
           "const": "default",
-          "markdownDescription": "Allows the webview to drive the native video player\n#### This default permission set includes:\n\n- `allow-get-state`\n- `allow-pick-videos`\n- `allow-play`\n- `allow-next`\n- `allow-pause`\n- `allow-resume`\n- `allow-stop`\n- `allow-remove`\n- `allow-set-options`\n- `allow-register-listener`\n- `allow-remove-listener`"
+          "markdownDescription": "Allows the webview to drive the native video player\n#### This default permission set includes:\n\n- `allow-get-state`\n- `allow-pick-videos`\n- `allow-play`\n- `allow-next`\n- `allow-pause`\n- `allow-resume`\n- `allow-stop`\n- `allow-remove`\n- `allow-set-options`\n- `allow-set-system-overlays`\n- `allow-register-listener`\n- `allow-remove-listener`"
         }
       ]
     }

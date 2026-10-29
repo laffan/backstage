@@ -15,6 +15,10 @@ struct RemoveArgs: Decodable {
   let id: String
 }
 
+struct SystemOverlaysArgs: Decodable {
+  let hidden: Bool
+}
+
 struct OptionsArgs: Decodable {
   let muted: Bool?
   let repeatMode: String?
@@ -127,7 +131,9 @@ class PlayerPlugin: Plugin, UIDocumentPickerDelegate {
 
     DispatchQueue.main.async {
       self.attach(below: webview, attempts: 20)
-      self.hideSystemOverlays()
+      // Dark chrome so the status bar is legible over video while the menu is open.
+      self.manager.viewController?.overrideUserInterfaceStyle = .dark
+      self.setSystemOverlays(hidden: true)
       if let lastId = self.defaults.string(forKey: self.lastIdKey) {
         self.start(id: lastId)
       }
@@ -153,16 +159,19 @@ class PlayerPlugin: Plugin, UIDocumentPickerDelegate {
 
   /// Tao's root view controller exposes setters for these UIViewController
   /// preferences (and calls the matching setNeeds…Update), so use them via KVC.
-  /// Deferring the screen edges means a first swipe only reveals the home
-  /// indicator / Control Center grabber instead of leaving the app.
-  private func hideSystemOverlays() {
+  /// While hidden, the screen edges are deferred so a first swipe only reveals
+  /// the home indicator / Control Center grabber instead of leaving the app.
+  /// While shown (menu open), the system behaves normally, so the window can
+  /// be dragged and resized.
+  private func setSystemOverlays(hidden: Bool) {
     guard let vc = manager.viewController else { return }
+    let edges: UIRectEdge = hidden ? .all : []
     let prefs: [(key: String, setter: String, value: Any)] = [
-      ("prefersStatusBarHidden", "setPrefersStatusBarHidden:", true),
-      ("prefersHomeIndicatorAutoHidden", "setPrefersHomeIndicatorAutoHidden:", true),
+      ("prefersStatusBarHidden", "setPrefersStatusBarHidden:", hidden),
+      ("prefersHomeIndicatorAutoHidden", "setPrefersHomeIndicatorAutoHidden:", hidden),
       (
         "preferredScreenEdgesDeferringSystemGestures",
-        "setPreferredScreenEdgesDeferringSystemGestures:", UIRectEdge.all.rawValue
+        "setPreferredScreenEdgesDeferringSystemGestures:", edges.rawValue
       ),
     ]
     // Guarded: KVC on a key without a setter would raise an ObjC exception.
@@ -186,6 +195,14 @@ class PlayerPlugin: Plugin, UIDocumentPickerDelegate {
 
   @objc public func getState(_ invoke: Invoke) {
     DispatchQueue.main.async { invoke.resolve(self.state()) }
+  }
+
+  @objc public func setSystemOverlays(_ invoke: Invoke) throws {
+    let args = try invoke.parseArgs(SystemOverlaysArgs.self)
+    DispatchQueue.main.async {
+      self.setSystemOverlays(hidden: args.hidden)
+      invoke.resolve()
+    }
   }
 
   @objc public func pickVideos(_ invoke: Invoke) {

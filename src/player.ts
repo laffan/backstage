@@ -38,6 +38,8 @@ export interface Player {
   stop(): Promise<PlayerState>;
   remove(id: string): Promise<PlayerState>;
   setOptions(patch: Partial<Options>): Promise<PlayerState>;
+  /** iPadOS status bar, home indicator and edge-swipe deferral. No-op on desktop. */
+  setSystemOverlays(hidden: boolean): Promise<void>;
   /** State changes the UI did not ask for (end of a video, playback errors). */
   onChange(cb: (state: PlayerState) => void): void;
 }
@@ -63,6 +65,7 @@ function nativePlayer(): Player {
     stop: () => call("stop"),
     remove: (id) => call("remove", { id }),
     setOptions: (patch) => call("set_options", { ...patch }),
+    setSystemOverlays: (hidden) => invoke("plugin:player|set_system_overlays", { hidden }),
     onChange: (cb) => void addPluginListener<PlayerState>("player", "state", cb),
   };
 }
@@ -187,6 +190,7 @@ function webPlayer(): Player {
       apply();
       return snapshot();
     },
+    setSystemOverlays: async () => {},
     onChange: (cb) => {
       listener = cb;
     },

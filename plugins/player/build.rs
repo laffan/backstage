@@ -11,6 +11,7 @@ const COMMANDS: &[&str] = &[
   "stop",
   "remove",
   "set_options",
+  "set_system_overlays",
   "register_listener",
   "remove_listener",
 ];

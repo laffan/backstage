@@ -10,6 +10,7 @@ permissions = [
   "allow-stop",
   "allow-remove",
   "allow-set-options",
+  "allow-set-system-overlays",
   "allow-register-listener",
   "allow-remove-listener",
 ]
