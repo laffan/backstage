@@ -9,6 +9,8 @@ const COMMANDS: &[&str] = &[
   "pause",
   "resume",
   "stop",
+  "get_position",
+  "seek",
   "remove",
   "set_options",
   "set_system_overlays",

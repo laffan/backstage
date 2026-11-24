@@ -15,6 +15,13 @@ struct RemoveArgs: Decodable {
   let id: String
 }
 
+struct SeekArgs: Decodable {
+  /// Seconds from the start of the current video.
+  let time: Double
+  /// false snaps to the nearest keyframe, which is fast enough to follow a drag.
+  let exact: Bool?
+}
+
 struct SystemOverlaysArgs: Decodable {
   let hidden: Bool
 }
@@ -44,6 +51,13 @@ struct Video: Encodable {
   let source: String
   let size: Int64?
   let available: Bool
+}
+
+/// Playback position of the current video, polled by the seek bar while the panel is open.
+struct Position: Encodable {
+  let time: Double
+  /// nil until the item knows its duration.
+  let duration: Double?
 }
 
 struct PlayerState: Encodable {
@@ -252,6 +266,31 @@ class PlayerPlugin: Plugin, UIDocumentPickerDelegate {
         self.player.play()
       }
       invoke.resolve(self.state())
+    }
+  }
+
+  @objc public func getPosition(_ invoke: Invoke) {
+    DispatchQueue.main.async { invoke.resolve(self.position()) }
+  }
+
+  @objc public func seek(_ invoke: Invoke) throws {
+    let args = try invoke.parseArgs(SeekArgs.self)
+    DispatchQueue.main.async {
+      guard self.currentId != nil, let item = self.player.currentItem else {
+        invoke.resolve(self.position())
+        return
+      }
+      var target = max(0, args.time)
+      let duration = item.duration.seconds
+      // Stay just short of the end: landing on it would loop or advance.
+      if duration.isFinite, duration > 0 { target = min(target, max(0, duration - 0.1)) }
+      let tolerance: CMTime = (args.exact ?? true) ? .zero : .positiveInfinity
+      self.player.seek(
+        to: CMTime(seconds: target, preferredTimescale: 600), toleranceBefore: tolerance,
+        toleranceAfter: tolerance
+      ) { _ in
+        DispatchQueue.main.async { invoke.resolve(self.position()) }
+      }
     }
   }
 
@@ -494,6 +533,14 @@ class PlayerPlugin: Plugin, UIDocumentPickerDelegate {
     PlayerState(
       currentId: currentId, playing: wantsPlaying && currentId != nil, options: options,
       library: library(), error: lastError)
+  }
+
+  private func position() -> Position {
+    let time = player.currentTime().seconds
+    let duration = player.currentItem?.duration.seconds
+    return Position(
+      time: time.isFinite ? max(0, time) : 0,
+      duration: duration.flatMap { $0.isFinite && $0 > 0 ? $0 : nil })
   }
 
   /// Pushes state changes the webview did not ask for (end of item, errors).

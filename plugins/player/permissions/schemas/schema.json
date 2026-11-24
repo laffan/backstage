@@ -295,6 +295,18 @@
       "type": "string",
       "oneOf": [
         {
+          "description": "Enables the get_position command without any pre-configured scope.",
+          "type": "string",
+          "const": "allow-get-position",
+          "markdownDescription": "Enables the get_position command without any pre-configured scope."
+        },
+        {
+          "description": "Denies the get_position command without any pre-configured scope.",
+          "type": "string",
+          "const": "deny-get-position",
+          "markdownDescription": "Denies the get_position command without any pre-configured scope."
+        },
+        {
           "description": "Enables the get_state command without any pre-configured scope.",
           "type": "string",
           "const": "allow-get-state",
@@ -403,6 +415,18 @@
           "markdownDescription": "Denies the resume command without any pre-configured scope."
         },
         {
+          "description": "Enables the seek command without any pre-configured scope.",
+          "type": "string",
+          "const": "allow-seek",
+          "markdownDescription": "Enables the seek command without any pre-configured scope."
+        },
+        {
+          "description": "Denies the seek command without any pre-configured scope.",
+          "type": "string",
+          "const": "deny-seek",
+          "markdownDescription": "Denies the seek command without any pre-configured scope."
+        },
+        {
           "description": "Enables the set_options command without any pre-configured scope.",
           "type": "string",
           "const": "allow-set-options",
@@ -439,10 +463,10 @@
           "markdownDescription": "Denies the stop command without any pre-configured scope."
         },
         {
-          "description": "Allows the webview to drive the native video player\n#### This default permission set includes:\n\n- `allow-get-state`\n- `allow-pick-videos`\n- `allow-play`\n- `allow-next`\n- `allow-pause`\n- `allow-resume`\n- `allow-stop`\n- `allow-remove`\n- `allow-set-options`\n- `allow-set-system-overlays`\n- `allow-register-listener`\n- `allow-remove-listener`",
+          "description": "Allows the webview to drive the native video player\n#### This default permission set includes:\n\n- `allow-get-state`\n- `allow-pick-videos`\n- `allow-play`\n- `allow-next`\n- `allow-pause`\n- `allow-resume`\n- `allow-stop`\n- `allow-get-position`\n- `allow-seek`\n- `allow-remove`\n- `allow-set-options`\n- `allow-set-system-overlays`\n- `allow-register-listener`\n- `allow-remove-listener`",
           "type": "string",
           "const": "default",
-          "markdownDescription": "Allows the webview to drive the native video player\n#### This default permission set includes:\n\n- `allow-get-state`\n- `allow-pick-videos`\n- `allow-play`\n- `allow-next`\n- `allow-pause`\n- `allow-resume`\n- `allow-stop`\n- `allow-remove`\n- `allow-set-options`\n- `allow-set-system-overlays`\n- `allow-register-listener`\n- `allow-remove-listener`"
+          "markdownDescription": "Allows the webview to drive the native video player\n#### This default permission set includes:\n\n- `allow-get-state`\n- `allow-pick-videos`\n- `allow-play`\n- `allow-next`\n- `allow-pause`\n- `allow-resume`\n- `allow-stop`\n- `allow-get-position`\n- `allow-seek`\n- `allow-remove`\n- `allow-set-options`\n- `allow-set-system-overlays`\n- `allow-register-listener`\n- `allow-remove-listener`"
         }
       ]
     }
