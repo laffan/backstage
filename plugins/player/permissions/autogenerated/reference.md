@@ -11,6 +11,8 @@ Allows the webview to drive the native video player
 - `allow-pause`
 - `allow-resume`
 - `allow-stop`
+- `allow-get-position`
+- `allow-seek`
 - `allow-remove`
 - `allow-set-options`
 - `allow-set-system-overlays`
@@ -25,6 +27,32 @@ Allows the webview to drive the native video player
 <th>Description</th>
 </tr>
 
+
+<tr>
+<td>
+
+`player:allow-get-position`
+
+</td>
+<td>
+
+Enables the get_position command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+`player:deny-get-position`
+
+</td>
+<td>
+
+Denies the get_position command without any pre-configured scope.
+
+</td>
+</tr>
 
 <tr>
 <td>
@@ -256,6 +284,32 @@ Enables the resume command without any pre-configured scope.
 <td>
 
 Denies the resume command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+`player:allow-seek`
+
+</td>
+<td>
+
+Enables the seek command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+`player:deny-seek`
+
+</td>
+<td>
+
+Denies the seek command without any pre-configured scope.
 
 </td>
 </tr>

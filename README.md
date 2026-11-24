@@ -15,6 +15,7 @@ Built with Tauri 2. On iPad the video is not played by the webview. It plays in 
 - **Add videos…** opens the Files picker. iCloud Drive files are downloaded on demand; for 10 GB files, keep them on the iPad or an external drive.
 - You can also copy files into **Files › On My iPad › Backstage**, or into the app's folder in Finder (iPad › Files) over USB. They show up in the library automatically.
 - Tap anywhere to show or hide the panel. It hides by itself after 6 s while playing.
+- The bar under the playing video's name shows where you are. Tap it to jump, or drag to scrub; the panel stays up while you drag.
 - Options: Fill / Fit / Stretch, loop one video or play the whole library, sound on/off, keep the screen awake. Options and the last video are remembered, so the app resumes playing when it launches.
 - To lock the iPad into display mode, use **Guided Access** (Settings › Accessibility). It also blocks the edge swipes.
 

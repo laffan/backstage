@@ -8,6 +8,8 @@ permissions = [
   "allow-pause",
   "allow-resume",
   "allow-stop",
+  "allow-get-position",
+  "allow-seek",
   "allow-remove",
   "allow-set-options",
   "allow-set-system-overlays",

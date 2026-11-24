@@ -19,6 +19,13 @@ export interface Video {
   available: boolean;
 }
 
+export interface Position {
+  /** Seconds from the start of the current video. */
+  time: number;
+  /** Absent until the video's duration is known. */
+  duration?: number | null;
+}
+
 export interface PlayerState {
   native: boolean;
   currentId: string | null;
@@ -37,6 +44,9 @@ export interface Player {
   resume(): Promise<PlayerState>;
   stop(): Promise<PlayerState>;
   remove(id: string): Promise<PlayerState>;
+  position(): Promise<Position>;
+  /** exact: false snaps to a nearby keyframe, fast enough to follow a drag. */
+  seek(time: number, exact: boolean): Promise<Position>;
   setOptions(patch: Partial<Options>): Promise<PlayerState>;
   /** iPadOS status bar, home indicator and edge-swipe deferral. No-op on desktop. */
   setSystemOverlays(hidden: boolean): Promise<void>;
@@ -64,6 +74,8 @@ function nativePlayer(): Player {
     resume: () => call("resume"),
     stop: () => call("stop"),
     remove: (id) => call("remove", { id }),
+    position: () => invoke<Position>("plugin:player|get_position"),
+    seek: (time, exact) => invoke<Position>("plugin:player|seek", { time, exact }),
     setOptions: (patch) => call("set_options", { ...patch }),
     setSystemOverlays: (hidden) => invoke("plugin:player|set_system_overlays", { hidden }),
     onChange: (cb) => void addPluginListener<PlayerState>("player", "state", cb),
@@ -93,6 +105,10 @@ function webPlayer(): Player {
   };
   let listener: (s: PlayerState) => void = () => {};
   const snapshot = () => structuredClone(st);
+  const position = (): Position => ({
+    time: video.currentTime,
+    duration: Number.isFinite(video.duration) ? video.duration : null,
+  });
   const fits: Record<Gravity, string> = { fill: "cover", fit: "contain", stretch: "fill" };
 
   const apply = () => {
@@ -184,6 +200,15 @@ function webPlayer(): Player {
       urls.delete(id);
       st.library = st.library.filter((v) => v.id !== id);
       return snapshot();
+    },
+    position: async () => position(),
+    seek: async (time, exact) => {
+      if (!st.currentId) return position();
+      const end = Number.isFinite(video.duration) ? Math.max(0, video.duration - 0.1) : time;
+      const target = Math.min(Math.max(0, time), end);
+      if (!exact && "fastSeek" in video) video.fastSeek(target);
+      else video.currentTime = target;
+      return position();
     },
     setOptions: async (patch) => {
       Object.assign(st.options, patch);
